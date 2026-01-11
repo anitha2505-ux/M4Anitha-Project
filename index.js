@@ -1,23 +1,39 @@
-//1. setup express
+//requires
 const express = require('express');
 require('dotenv').config()
-const mongoUri = process.env.MONGO_URI;
-const dbName = "recipecatalogue";
 const { connect } = require('./db');
 const cors = require('cors');
+const { ObjectId } = require('mongodb');
 
-//1a. create the app 
+//setup express
 const app = express();
-app.use(express.json())
 
-//2. create routes
-app.get('/', function(req,res){
-    res.json({
+//app.use is to activate middleware
+app.use(express.json());
+app.use(cors());
+
+
+//setup database
+const mongoUri = process.env.MONGO_URI;
+const dbName = "recipecatalogue";
+
+//create routes
+async function main() {
+    try {
+        const db = await connect(mongoUri, dbname);
+        console.log('connected to mongodb');
+        app.get('/', function(req,res){
+        res.json({
         "message":"hello world"
     });
 })
+    } catch (error) {
+        console.error('Error connecting to MongoDB', error);
+    }
+}
+main();
 
-// 3. Start server (do not put any lines after this line)
+// Start server (do not put any lines after this line)
 app.listen(3000, function(){
     console.log("Server has started");
 })
