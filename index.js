@@ -1,37 +1,19 @@
+//1. setup express
 const express = require('express');
 const cors = require('cors');
 
-let app = express();
-app.use(cors());
+//1a. create the app 
+const app = express();
+app.use(express.json())
 
-//add routes here
-
-app.get('/echo', (req,res) => {
-    // get all query parameters
-    const queryParams = req.query;
-
-    // get a response object
-    const response = {
-        message: "Here are the query parameters you sent";
-        firstName: queryParams.firstName,
-        lastName: queryParams.lastName
-    };
-
-    // send the response as JSON
-    res.json(response);
-});
-
-app.get('/hello/:name', (req,res) => {
-    let name = req.params.name;
-    res.send("Hi " + name);
-})
-
+//2. create routes
 app.get('/', function(req,res){
     res.json({
-        "message": "hello world"
+        "message":"hello world"
     });
 })
 
-app.listen(3000, ()=> {
-    console.log("Server Started")
+// 3. Start server (do not put any lines after this line)
+app.listen(3000, function(){
+    console.log("Server has started");
 })
