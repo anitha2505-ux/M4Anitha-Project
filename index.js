@@ -1,5 +1,9 @@
 //1. setup express
 const express = require('express');
+require('dotenv').config()
+const mongoUri = process.env.MONGO_URI;
+const dbName = "recipecatalogue";
+const { connect } = require('./db');
 const cors = require('cors');
 
 //1a. create the app 
